@@ -44,6 +44,7 @@ public class HelloJersey {
                 .build();
     }
 
+    //Ex: http://localhost:8080/jax-rs/rest/hello/printQueryParam/?name=sean&city=Boston
     @GET
     @Path("/printQueryParam")
     public Response printQueryParam(@DefaultValue("john") @QueryParam(value = "name") String name,
