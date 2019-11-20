@@ -45,7 +45,7 @@ public class AddressResource {
 
     @GET
     @Path("/{id}")
-    public Address getAddressById(@QueryParam("id") String id){
+    public Address getAddressById(@PathParam("id") String id){
         Address add = null;
         for(Address address : addresses){
             if (address.getId().equals(id)){
