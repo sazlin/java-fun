@@ -14,6 +14,11 @@
             <param-value>com.seanazlin.jaxrs</param-value>
             <description>Base package</description>
         </init-param>
+        <init-param>
+            <param-name>jersey.config.server.provider.classnames</param-name>
+            <param-value>org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
+            <description>MultiPartFeature (for file uploads)</description>
+        </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
