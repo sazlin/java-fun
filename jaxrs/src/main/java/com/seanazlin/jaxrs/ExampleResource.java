@@ -127,7 +127,6 @@ public class ExampleResource {
     }
 
 
-    // TODO 1: Make it possible to download PDF and Excel spreadsheets
     @GET
     @Path("/imageFileDownload")
     @Produces("image/png")
