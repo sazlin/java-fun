@@ -3,7 +3,6 @@ package com.seanazlin.jaxrs;
 import org.apache.commons.io.FileUtils;
 import org.glassfish.jersey.media.multipart.FormDataContentDisposition;
 import org.glassfish.jersey.media.multipart.FormDataParam;
-import org.glassfish.jersey.media.multipart.MultiPartMediaTypes;
 
 import javax.ws.rs.*;
 import javax.ws.rs.core.*;
@@ -136,6 +135,28 @@ public class ExampleResource {
         Response resp = Response.status(200)
                 .entity(new File("/Users/seanazlin/IdeaProjects/jaxrs/somePNG.png"))
                 .header("Content-Disposition", "attachment;filename=\"aPng.png\"")
+                .build();
+        return resp;
+    }
+
+    @GET
+    @Path("/excelFileDownload")
+    @Produces("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+    public Response excelFileDownload(){
+        Response resp = Response.status(200)
+                .entity(new File("/Users/seanazlin/IdeaProjects/jaxrs/someXLSX.xlsx"))
+                .header("Content-Disposition", "attachment;filename=\"aXLSX.xlsx\"")
+                .build();
+        return resp;
+    }
+
+    @GET
+    @Path("/pdfFileDownload")
+    @Produces("application/pdf")
+    public Response pdfFileDownload(){
+        Response resp = Response.status(200)
+                .entity(new File("/Users/seanazlin/IdeaProjects/jaxrs/somePDF.pdf"))
+                .header("Content-Disposition", "attachment;filename=\"aPDF.pdf\"")
                 .build();
         return resp;
     }
