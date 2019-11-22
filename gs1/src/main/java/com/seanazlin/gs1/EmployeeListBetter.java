@@ -36,13 +36,6 @@ public class EmployeeListBetter {
             e.printStackTrace();
         }
 
-//        for(Employee employee : employees){
-////            EmployeeThread empThread = new EmployeeThread(bufferedWriter, employee);
-//            // Thread e = new Thread(empThread);
-//            executor.execute(empThread);
-////            e.start();
-//        }
-
         executor.shutdown();
         try {
             executor.awaitTermination(5, TimeUnit.SECONDS);
@@ -55,10 +48,5 @@ public class EmployeeListBetter {
             System.out.println(endTime - startTime);
         }
 
-
-        // System.out.println(employees);
     }
 }
-
-// TODO: Run ThreadExperiment1 and measure the time
-// TODO: Run ThreadExperiment2 and measure the time

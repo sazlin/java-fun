@@ -1,12 +1,9 @@
-package com.seanazlin.gs1;
+package com.seanazlin.threading;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.locks.ReadWriteLock;
-import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
-import java.util.stream.IntStream;
 
 public class SynchronizationExample5 {
     private int count = 0;

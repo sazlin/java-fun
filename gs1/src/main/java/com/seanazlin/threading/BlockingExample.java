@@ -1,10 +1,12 @@
-package com.seanazlin.gs1;
+package com.seanazlin.threading;
 
 // TODO: Producer / Consumer Problem - producer is fast, consumer is slow
 // solve using plain threads
 
+import com.seanazlin.threading.ThreadConsumer;
+import com.seanazlin.threading.ThreadProducer;
+
 import java.util.concurrent.ArrayBlockingQueue;
-import java.util.concurrent.BlockingQueue;
 
 
 // TODO: Review example

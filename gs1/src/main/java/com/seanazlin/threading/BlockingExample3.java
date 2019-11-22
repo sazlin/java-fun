@@ -1,16 +1,17 @@
-package com.seanazlin.gs1;
+package com.seanazlin.threading;
 
 // TODO: Producer / Consumer Problem - producer is fast, consumer is slow
 // solve using plain threads
 
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.IntStream;
 
 
-public class BlockingExample2 {
+public class BlockingExample3 {
     private final static int MAX_QUEUE_SIZE = 10;
-    private static ArrayList<String> queue = new ArrayList<>(MAX_QUEUE_SIZE);
-    private static ReentrantLock rLock = new ReentrantLock();
+    private final static ArrayList<String> queue = new ArrayList<>(MAX_QUEUE_SIZE);
+    private final static ReentrantLock rLock = new ReentrantLock();
     private static int enqueueCount = 0;
     private static int dequeueCount = 0;
 
@@ -49,10 +50,39 @@ public class BlockingExample2 {
         }
     }
 
+    private static void enqueueSync(String s){
+        while(true) {
+            synchronized(queue) {
+                if (queue.size() < MAX_QUEUE_SIZE) {
+                    queue.add(s);
+                    enqueueCount++;
+                    System.out.println("enqueued " + s);
+                    return;
+                }
+            }
+            Thread.yield();
+        }
+    }
+
+    private static String dequeueSync(){
+        String s = null;
+        while(true) {
+            synchronized(queue) {
+                if (queue.size() > 0) {
+                    s = queue.remove(0);
+                    dequeueCount++;
+                    System.out.println("dequeued " + s);
+                    return s;
+                }
+            }
+            Thread.yield();
+        }
+    }
+
 
     public static void main(String[] args){
         // Output total execution time on process exit
-        final int WORK_COUNT = 2000;
+        final int WORK_COUNT = 500000;
         long start = System.currentTimeMillis();
         Runtime.getRuntime().addShutdownHook(
                 new Thread(() -> {
@@ -63,12 +93,12 @@ public class BlockingExample2 {
                 })
         );
 
-        for(int i = 0; i<WORK_COUNT; i++){
-            new Thread(() -> enqueue(String.valueOf(Math.random()))).start();
-        }
+        new Thread(()->{
+            IntStream.range(0, WORK_COUNT).forEach(x -> enqueueSync(String.valueOf(x)));
+        }).start();
 
-        for(int i = 0; i<WORK_COUNT; i++){
-            new Thread(BlockingExample2::dequeue).start();
-        }
+        new Thread(()->{
+            IntStream.range(0, WORK_COUNT).forEach(x -> dequeueSync());
+        }).start();
     }
 }

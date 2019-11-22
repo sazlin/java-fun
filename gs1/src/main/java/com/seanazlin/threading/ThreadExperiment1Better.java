@@ -1,4 +1,4 @@
-package com.seanazlin.gs1;
+package com.seanazlin.threading;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;

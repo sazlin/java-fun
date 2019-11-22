@@ -1,24 +1,15 @@
-package com.seanazlin.gs1;
-
-import lombok.Synchronized;
+package com.seanazlin.threading;
 
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.IntStream;
 
-public class SynchronizationExample3 {
-    private AtomicInteger count = new AtomicInteger(0);
+public class SynchronizationExample1 {
+    private int count;
 
     public void increaseCount(){
-        count.getAndIncrement();
-    }
-
-    public void increaseCountSync(){
-        synchronized (this){
-            count.getAndIncrement();
-        }
+        count++;
     }
 
     public void performCount() {
@@ -33,7 +24,7 @@ public class SynchronizationExample3 {
         }
     }
     public static void main(String[] args){
-        SynchronizationExample3 syncExample = new SynchronizationExample3();
+        SynchronizationExample1 syncExample = new SynchronizationExample1();
         syncExample.performCount();
     }
 }

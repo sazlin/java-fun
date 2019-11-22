@@ -21,7 +21,6 @@ public class ConcurrentExample1 {
         for(Map.Entry<String,String> entry : map.entrySet()){
             if("c".equals(entry.getKey()) && "3".equals(entry.getValue())){
                 map.put("f", "6");
-
             }
         }
 

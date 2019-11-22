@@ -7,11 +7,6 @@ import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Supplier;
 
-// TODO 1: read from a text file, check to see if a line is empty, whether line starts with A, convert the lines to upper case,
-// output results to std out to line by line
-// use functional interfaces
-
-// TODO 2: read from a txt file, if line is upper case then convert to lower case, and vice versa, and write back to a different file
 public class SupplierEg {
     public static void main(String[] args) {
         // used in for loops to create objects

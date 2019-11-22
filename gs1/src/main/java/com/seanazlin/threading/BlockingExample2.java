@@ -1,27 +1,31 @@
-package com.seanazlin.gs1;
+package com.seanazlin.threading;
 
 // TODO: Producer / Consumer Problem - producer is fast, consumer is slow
 // solve using plain threads
 
 import java.util.ArrayList;
 import java.util.concurrent.locks.ReentrantLock;
-import java.util.stream.IntStream;
 
 
-// Lockless approach
-public class BlockingExample4 {
+public class BlockingExample2 {
     private final static int MAX_QUEUE_SIZE = 10;
-    private final static ArrayList<String> queue = new ArrayList<>(MAX_QUEUE_SIZE);
+    private static ArrayList<String> queue = new ArrayList<>(MAX_QUEUE_SIZE);
+    private static ReentrantLock rLock = new ReentrantLock();
     private static int enqueueCount = 0;
     private static int dequeueCount = 0;
 
     private static void enqueue(String s){
         while(true) {
-            if(enqueueCount - dequeueCount != MAX_QUEUE_SIZE){
-                queue.add(s);
-                enqueueCount++;
-                System.out.println("enqueued " + s);
-                return;
+            try{
+                rLock.lock();
+                if(queue.size() < MAX_QUEUE_SIZE){
+                    queue.add(s);
+                    enqueueCount++;
+                    System.out.println("enqueued " + s);
+                    return;
+                }
+            } finally {
+                rLock.unlock();
             }
             Thread.yield();
         }
@@ -30,19 +34,25 @@ public class BlockingExample4 {
     private static String dequeue(){
         String s = null;
         while(true) {
-            if (enqueueCount - dequeueCount != 0) {
-                s = queue.remove(0);
-                dequeueCount++;
-                System.out.println("dequeued " + s);
-                return s;
+            try {
+                rLock.lock();
+                if (queue.size() > 0) {
+                    s = queue.remove(0);
+                    dequeueCount++;
+                    System.out.println("dequeued " + s);
+                    return s;
+                }
+            } finally {
+                rLock.unlock();
             }
             Thread.yield();
         }
     }
 
+
     public static void main(String[] args){
         // Output total execution time on process exit
-        final int WORK_COUNT = 500000;
+        final int WORK_COUNT = 2000;
         long start = System.currentTimeMillis();
         Runtime.getRuntime().addShutdownHook(
                 new Thread(() -> {
@@ -53,12 +63,12 @@ public class BlockingExample4 {
                 })
         );
 
-        new Thread(()->{
-            IntStream.range(0, WORK_COUNT).forEach(x -> enqueue(String.valueOf(x)));
-        }).start();
+        for(int i = 0; i<WORK_COUNT; i++){
+            new Thread(() -> enqueue(String.valueOf(Math.random()))).start();
+        }
 
-        new Thread(()->{
-            IntStream.range(0, WORK_COUNT).forEach(x -> dequeue());
-        }).start();
+        for(int i = 0; i<WORK_COUNT; i++){
+            new Thread(BlockingExample2::dequeue).start();
+        }
     }
 }

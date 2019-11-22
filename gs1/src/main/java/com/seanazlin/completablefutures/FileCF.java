@@ -1,6 +1,5 @@
-package com.seanazlin.cf;
+package com.seanazlin.completablefutures;
 
-import java.io.*;
 import java.nio.file.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;

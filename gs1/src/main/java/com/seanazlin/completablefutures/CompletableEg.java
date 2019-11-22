@@ -1,9 +1,8 @@
-package com.seanazlin.cf;
+package com.seanazlin.completablefutures;
 
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
-// TODO 1: Do file homework and other examples using CompletableFuture
 public class CompletableEg {
     public static void main(String[] args) {
         CompletableFuture<String> future = CompletableFuture.completedFuture("a value 0");

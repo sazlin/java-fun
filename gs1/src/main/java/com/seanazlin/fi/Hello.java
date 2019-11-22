@@ -1,4 +1,4 @@
-package com.seanazlin.lambda;
+package com.seanazlin.fi;
 
 @FunctionalInterface
 public interface Hello {

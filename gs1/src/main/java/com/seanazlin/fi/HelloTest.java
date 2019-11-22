@@ -1,4 +1,4 @@
-package com.seanazlin.lambda;
+package com.seanazlin.fi;
 
 public class HelloTest {
     public String sayHello(String name, Hello hello){

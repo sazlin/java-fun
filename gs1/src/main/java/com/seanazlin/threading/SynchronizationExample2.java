@@ -1,21 +1,26 @@
-package com.seanazlin.gs1;
+package com.seanazlin.threading;
 
-import java.util.concurrent.Executor;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.IntStream;
 
-public class SynchronizationExample1 {
+public class SynchronizationExample2 {
     private int count;
 
-    public void increaseCount(){
+    public synchronized void increaseCount(){
         count++;
+    }
+
+    public void increaseCountSync(){
+        synchronized (this){
+            count++;
+        }
     }
 
     public void performCount() {
         ExecutorService executorService = Executors.newFixedThreadPool(3);
-        IntStream.range(0, 1000).forEach(x -> executorService.submit(this::increaseCount));
+        IntStream.range(0, 1000).forEach(x -> executorService.submit(this::increaseCountSync));
         executorService.shutdown();
         try {
             executorService.awaitTermination(10, TimeUnit.SECONDS);
@@ -25,7 +30,7 @@ public class SynchronizationExample1 {
         }
     }
     public static void main(String[] args){
-        SynchronizationExample1 syncExample = new SynchronizationExample1();
+        SynchronizationExample2 syncExample = new SynchronizationExample2();
         syncExample.performCount();
     }
 }
